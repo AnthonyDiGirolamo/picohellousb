@@ -1,0 +1,9 @@
+[submodule "third_party/pico-extras"]
+	path = third_party/pico-extras
+	url = https://github.com/raspberrypi/pico-extras.git
+[submodule "third_party/pico-sdk"]
+	path = third_party/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
+[submodule "third_party/pigweed"]
+	path = third_party/pigweed
+	url = https://pigweed.googlesource.com/pigweed/pigweed
