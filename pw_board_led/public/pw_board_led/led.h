@@ -22,4 +22,4 @@ void Toggle();
 
 // TODO(amontanez): Maybe we should add a GetState()? 🤔
 
-}  // namespace pw::board_led
+} // namespace pw::board_led

@@ -12,32 +12,32 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-#include "pw_board_led/led.h"
+#include "pico/stdlib.h"
 
-#include <Arduino.h>
+#include "pw_board_led/led.h"
 
 #include <cinttypes>
 
 namespace pw::board_led {
 namespace {
 
-constexpr int kLedPin = 13;
+constexpr uint kLedPin = PICO_DEFAULT_LED_PIN;
 bool led_on = false;
 
-}  // namespace
+} // namespace
 
 void Init() {
-  pinMode(kLedPin, OUTPUT);
-  TurnOff();
+  gpio_init(kLedPin);
+  gpio_set_dir(kLedPin, GPIO_OUT);
 }
 
 void TurnOff() {
-  digitalWrite(kLedPin, LOW);
+  gpio_put(LED_PIN, 0);
   led_on = false;
 }
 
 void TurnOn() {
-  digitalWrite(kLedPin, HIGH);
+  gpio_put(LED_PIN, 1);
   led_on = true;
 }
 
@@ -50,4 +50,4 @@ void Toggle() {
   }
 }
 
-}  // namespace pw::board_led
+} // namespace pw::board_led

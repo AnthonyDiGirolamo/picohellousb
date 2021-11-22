@@ -58,4 +58,4 @@ uint32_t Micros() {
   return difference;
 }
 
-}  // namespace pw::spin_delay
+} // namespace pw::spin_delay

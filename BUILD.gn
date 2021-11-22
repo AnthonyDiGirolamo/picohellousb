@@ -21,10 +21,12 @@ import("$dir_pw_unit_test/test.gni")
 # Lists all the targets build by default with e.g. `ninja -C out`.
 group("default") {
   deps = [
-    ":applications",
     ":host",
-    ":python.lint",
-    ":python.tests",
+    ":pico",
+    ":python",
+
+    # ":python.lint",
+    # ":python.tests",
   ]
 }
 
@@ -38,8 +40,8 @@ group("host") {
 
 group("pico") {
   deps = [
-    "pico_build(//targets/pico:pico_debug)",
     "pico_build:bs2_default(//targets/pico:pico_debug)",
+    "pico_build(//targets/pico:pico_debug)",
   ]
 }
 
