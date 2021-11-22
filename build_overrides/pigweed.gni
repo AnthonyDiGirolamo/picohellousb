@@ -22,6 +22,7 @@ import("$dir_pigweed/modules.gni")
 
 # Experimental modules.
 declare_args() {
+  dir_pico_build = get_path_info("//pico_build", "abspath")
   dir_pw_board_led = get_path_info("//pw_board_led", "abspath")
   dir_pw_board_led_arduino = get_path_info("//pw_board_led_arduino", "abspath")
   dir_pw_board_led_host = get_path_info("//pw_board_led_host", "abspath")
