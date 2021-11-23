@@ -14,9 +14,12 @@
 
 #include "pico/stdlib.h"
 
-#include "pw_sys_io_arduino/init.h"
+#include "pw_sys_io_pico/init.h"
 
-// Arduino target specific init. For Pigweed, this calls pw_sys_io's init. User
+// Pico target specific init. For Pigweed, this calls pw_sys_io's init. User
 // projects may chose to provide something different if they need more pre-main
 // init functionality.
-extern "C" void pw_pico_Init() { stdio_init_all(); }
+extern "C" void pw_pico_Init() {
+  stdio_init_all();
+  pw_sys_io_pico_Init();
+}

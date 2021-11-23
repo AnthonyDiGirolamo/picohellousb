@@ -19,10 +19,10 @@ import("$dir_pw_build/target_types.gni")
 pw_executable("blinky") {
   sources = [ "main.cc" ]
   deps = [
-    # "$dir_pw_log",
+    "$dir_pw_log",
 
     # The assert backend is defined in the toolchain with `pw_assert_BACKEND`.
-    # "$dir_pw_assert",
+    "$dir_pw_assert",
     "$dir_pw_board_led",
     "$dir_pw_spin_delay",
   ]

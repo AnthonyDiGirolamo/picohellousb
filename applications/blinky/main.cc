@@ -13,15 +13,15 @@
 // the License.
 
 #include "pw_board_led/led.h"
-// #include "pw_log/log.h"
+#include "pw_log/log.h"
 #include "pw_spin_delay/delay.h"
 
 int main() {
   pw::board_led::Init();
-  // int i = 0;
+  int i = 0;
 
   while (true) {
-    // PW_LOG_INFO("Blink %d", i++);
+    PW_LOG_INFO("Blink %d", i++);
 
     pw::board_led::TurnOn();
     pw::spin_delay::WaitMillis(1000);

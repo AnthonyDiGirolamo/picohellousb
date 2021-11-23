@@ -240,10 +240,11 @@ if (dir_third_party_pico_sdk != "") {
       sources = [ "init.cc" ]
 
       public_deps = [
-        # "$dir_pw_sys_io_pico",
+        "$dir_pw_sys_io_pico",
         "//targets/pico:pico_core_sources",
       ]
       deps = []
+      remove_configs = [ "$dir_pw_build:strict_warnings" ]
     }
 
     pw_source_set("pico_core_sources") {

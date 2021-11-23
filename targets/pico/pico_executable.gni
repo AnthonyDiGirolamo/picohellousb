@@ -22,6 +22,9 @@ template("pico_executable") {
     if (!defined(deps)) {
       deps = []
     }
-    deps += [ "//targets/pico:pico_core_sources" ]
+    deps += [
+      "//targets/pico:pre_init",
+      "//targets/pico:pico_core_sources",
+    ]
   }
 }
