@@ -18,6 +18,7 @@ import("$dir_pw_build/target_types.gni")
 
 pw_source_set("pw_board_led_pico") {
   deps = [ "$dir_pw_board_led:pw_board_led.facade" ]
+  public_deps = [ "$dir_pico_build:pico_core_sources" ]
   sources = [ "led.cc" ]
   remove_configs = [ "$dir_pw_build:strict_warnings" ]
 }

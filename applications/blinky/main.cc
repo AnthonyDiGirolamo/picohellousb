@@ -12,16 +12,23 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+#include "pw_board_led/led.h"
+// #include "pw_log/log.h"
 #include "pw_spin_delay/delay.h"
 
-#include <cstddef>
+int main() {
+  pw::board_led::Init();
+  // int i = 0;
 
-#include "pico/stdlib.h"
+  while (true) {
+    // PW_LOG_INFO("Blink %d", i++);
 
-namespace pw::spin_delay {
+    pw::board_led::TurnOn();
+    pw::spin_delay::WaitMillis(1000);
 
-void WaitMillis(size_t delay_ms) { sleep_ms(delay_ms); }
-uint32_t Millis() { return 0; }
-uint32_t Micros() { return 0; }
+    pw::board_led::TurnOff();
+    pw::spin_delay::WaitMillis(1000);
+  }
 
-} // namespace pw::spin_delay
+  return 0;
+}

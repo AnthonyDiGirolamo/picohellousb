@@ -32,12 +32,12 @@ void Init() {
 }
 
 void TurnOff() {
-  gpio_put(LED_PIN, 0);
+  gpio_put(kLedPin, 0);
   led_on = false;
 }
 
 void TurnOn() {
-  gpio_put(LED_PIN, 1);
+  gpio_put(kLedPin, 1);
   led_on = true;
 }
 
