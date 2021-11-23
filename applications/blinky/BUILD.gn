@@ -23,12 +23,7 @@ pw_executable("blinky") {
 
     # The assert backend is defined in the toolchain with `pw_assert_BACKEND`.
     # "$dir_pw_assert",
-    "//pw_board_led",
-    "//pw_spin_delay",
+    "$dir_pw_board_led",
+    "$dir_pw_spin_delay",
   ]
-
-  # if (pw_build_EXECUTABLE_TARGET_TYPE == "pico_executable") {
-  #   deps =[
-  #   ]
-  # }
 }

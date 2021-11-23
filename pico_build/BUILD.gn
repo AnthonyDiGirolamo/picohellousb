@@ -2,13 +2,14 @@ import("//build_overrides/pigweed.gni")
 
 import("$dir_pw_build/target_types.gni")
 
-# _pico_sdk_dir = rebase_path(dir_third_party_pico_sdk)
-
 pw_executable("pico_build") {
   sources = [ "//hello_usb.c" ]
   deps = [ "//targets/pico:pico_core_sources" ]
 }
 
+# _pico_sdk_dir = rebase_path(dir_third_party_pico_sdk)
+
+# TODO: This is inheriting pico_core_sources when it shouldn't be
 # pw_executable("bs2_default") {
 #   defines = [
 #     "PICO_H_LOCATION=\"${_pico_sdk_dir}/src/boards/include/boards/pico.h\"",
@@ -24,7 +25,6 @@ pw_executable("pico_build") {
 #     "-O3",
 #     "-DNDEBUG",
 #   ]
-
 #   include_dirs = [
 #     "${_pico_sdk_dir}/src/boards/include",
 #     "${_pico_sdk_dir}/src/common/pico_base/include",
@@ -39,8 +39,6 @@ pw_executable("pico_build") {
 #       [ "${_pico_sdk_dir}/src/rp2_common/boot_stage2/compile_time_choice.S" ]
 #   ldflags = [
 #     "-Wl,--build-id=none",
-
-#     # "--specs=nosys.specs",
 #     "-nostartfiles",
 #     "-Wl,--script=${_pico_sdk_dir}/src/rp2_common/boot_stage2/boot_stage2.ld",
 #     "-Wl,-Map=bs2_default.elf.map",
