@@ -40,7 +40,7 @@ group("host") {
 
 group("pico") {
   deps = [
-    "pico_build:bs2_default(//targets/pico:pico_debug)",
+    # "pico_build:bs2_default(//targets/pico:pico_debug)",
     "pico_build(//targets/pico:pico_debug)",
     "//applications/blinky:blinky(//targets/pico:pico_debug)",
   ]

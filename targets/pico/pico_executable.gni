@@ -1,4 +1,4 @@
-# Copyright 2021 The Pigweed Authors
+# Copyright 2020 The Pigweed Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -13,14 +13,15 @@
 # the License.
 
 import("//build_overrides/pigweed.gni")
+import("$dir_pw_malloc/backend.gni")
 
-import("$dir_pw_build/target_types.gni")
-
-pw_source_set("pw_board_led_pico") {
-  deps = [
-    "$dir_pw_board_led:pw_board_led.facade",
-    "//targets/pico:pico_core_sources",
-  ]
-  sources = [ "led.cc" ]
-  remove_configs = [ "$dir_pw_build:strict_warnings" ]
+# Executable wrapper that includes some baremetal startup code.
+template("pico_executable") {
+  target("executable", target_name) {
+    forward_variables_from(invoker, "*")
+    if (!defined(deps)) {
+      deps = []
+    }
+    deps += [ "//targets/pico:pico_core_sources" ]
+  }
 }

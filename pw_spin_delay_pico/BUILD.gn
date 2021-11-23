@@ -18,8 +18,8 @@ import("$dir_pw_build/target_types.gni")
 
 pw_source_set("pw_spin_delay_pico") {
   deps = [
-    "$dir_pico_build:pico_core_sources",
     "$dir_pw_spin_delay:pw_spin_delay.facade",
+    "//targets/pico:pico_core_sources",
   ]
   sources = [ "delay.cc" ]
   remove_configs = [ "$dir_pw_build:strict_warnings" ]

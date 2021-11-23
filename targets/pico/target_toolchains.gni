@@ -20,6 +20,46 @@ import("$dir_pw_protobuf_compiler/proto.gni")
 import("$dir_pw_third_party/nanopb/nanopb.gni")
 import("$dir_pw_toolchain/arm_gcc/toolchains.gni")
 
+_target_config = {
+  # Use the logging main.
+  # pw_unit_test_MAIN = "$dir_pw_unit_test:simple_printing_main"
+
+  # Configuration options for Pigweed executable targets.
+  pw_build_EXECUTABLE_TARGET_TYPE = "pico_executable"
+
+  pw_build_EXECUTABLE_TARGET_TYPE_FILE =
+      get_path_info("pico_executable.gni", "abspath")
+
+  # Path to the bloaty config file for the output binaries.
+  # pw_bloat_BLOATY_CONFIG = "$dir_pw_boot_cortex_m/bloaty_config.bloaty"
+
+  # if (pw_pico_use_test_server) {
+  #   _test_runner_script =
+  #       "$dir_pico_build/py/pico_build/unit_test_client.py"
+  #   pw_unit_test_AUTOMATIC_RUNNER =
+  #       get_path_info(_test_runner_script, "abspath")
+  # }
+
+  # Facade backends
+  # pw_assert_BACKEND = dir_pw_assert_basic
+  # pw_log_BACKEND = dir_pw_log_basic
+  # pw_sync_INTERRUPT_SPIN_LOCK_BACKEND =
+  #     "$dir_pw_sync_baremetal:interrupt_spin_lock"
+  # pw_sync_MUTEX_BACKEND = "$dir_pw_sync_baremetal:mutex"
+  # pw_sys_io_BACKEND = dir_pw_sys_io_pico
+  # pw_rpc_system_server_BACKEND =
+  #     "$dir_pigweed/targets/pico:system_rpc_server"
+  # pw_arduino_build_INIT_BACKEND = "//targets/pico:pre_init"
+
+  # pw_build_LINK_DEPS = [
+  #   "$dir_pw_assert:impl",
+  #   "$dir_pw_log:impl",
+  # ]
+
+  current_cpu = "arm"
+  current_os = ""
+}
+
 target_toolchain_pico = {
   _excluded_members = [
     "defaults",
@@ -33,6 +73,7 @@ target_toolchain_pico = {
     final_binary_extension = ".elf"
     defaults = {
       forward_variables_from(_toolchain_base.defaults, "*")
+      forward_variables_from(_target_config, "*")
 
       # Configure backend for pw_board_led
       pw_board_led_BACKEND = "$dir_pw_board_led_pico"
