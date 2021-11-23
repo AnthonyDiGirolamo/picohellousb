@@ -23,8 +23,8 @@ template("pico_executable") {
       deps = []
     }
     deps += [
-      "//targets/pico:pre_init",
       "//targets/pico:pico_core_sources",
+      "//targets/pico:pre_init",
     ]
   }
 }

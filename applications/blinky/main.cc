@@ -15,8 +15,11 @@
 #include "pw_board_led/led.h"
 #include "pw_log/log.h"
 #include "pw_spin_delay/delay.h"
+#include "pw_sys_io_pico/init.h"
 
 int main() {
+  pw_sys_io_pico_Init();
+
   pw::board_led::Init();
   int i = 0;
 

@@ -25,5 +25,6 @@ pw_executable("blinky") {
     "$dir_pw_assert",
     "$dir_pw_board_led",
     "$dir_pw_spin_delay",
+    "$dir_pw_sys_io_pico",
   ]
 }

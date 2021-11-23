@@ -51,7 +51,7 @@ _target_config = {
 
   # pw_rpc_system_server_BACKEND =
   #     "$dir_pigweed/targets/pico:system_rpc_server"
-  # pw_arduino_build_INIT_BACKEND = "//targets/pico:pre_init"
+  # pw_pico_build_INIT_BACKEND = "//targets/pico:pre_init"
 
   pw_build_LINK_DEPS += [
     "$dir_pw_assert:impl",

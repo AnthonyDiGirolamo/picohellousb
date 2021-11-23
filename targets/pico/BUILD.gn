@@ -72,7 +72,8 @@ if (dir_third_party_pico_sdk != "") {
         "PICO_NO_FLASH=0",
         "PICO_NO_HARDWARE=0",
         "PICO_ON_DEVICE=1",
-        "PICO_TARGET_NAME=\"hello_usb\"",
+
+        # "PICO_TARGET_NAME=\"hello_usb\"",
         "PICO_USE_BLOCKED_RAM=0",
       ]
       include_dirs = [
