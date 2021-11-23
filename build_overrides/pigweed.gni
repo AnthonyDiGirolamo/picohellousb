@@ -24,9 +24,10 @@ import("$dir_pigweed/modules.gni")
 declare_args() {
   dir_pico_build = get_path_info("//pico_build", "abspath")
   dir_pw_board_led = get_path_info("//pw_board_led", "abspath")
-  dir_pw_board_led_pico = get_path_info("//pw_board_led_pico", "abspath")
   dir_pw_board_led_host = get_path_info("//pw_board_led_host", "abspath")
+  dir_pw_board_led_pico = get_path_info("//pw_board_led_pico", "abspath")
   dir_pw_spin_delay = get_path_info("//pw_spin_delay", "abspath")
-  dir_pw_spin_delay_pico = get_path_info("//pw_spin_delay_pico", "abspath")
   dir_pw_spin_delay_host = get_path_info("//pw_spin_delay_host", "abspath")
+  dir_pw_spin_delay_pico = get_path_info("//pw_spin_delay_pico", "abspath")
+  dir_pw_sys_io_pico = get_path_info("//pw_sys_io_pico", "abspath")
 }

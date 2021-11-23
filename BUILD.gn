@@ -35,6 +35,8 @@ group("host") {
   deps = [
     # No host tests yet
     # ":host_tests(//targets/host:host_debug_tests)"
+    "//applications/blinky:blinky(//targets/host:host_debug)",
+
     # elf2uf2 Host tool
     "//third_party/elf2uf2:elf2uf2(//targets/host:host_debug)",
   ]

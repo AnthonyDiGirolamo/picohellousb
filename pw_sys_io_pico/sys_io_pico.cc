@@ -35,19 +35,19 @@ namespace {
 
 static int chars_rxed = 0;
 
-// RX interrupt handler
-void on_uart_rx() {
-  while (uart_is_readable(UART_ID)) {
-    uint8_t ch = uart_getc(UART_ID);
-    // Can we send it back?
-    if (uart_is_writable(UART_ID)) {
-      // Change it slightly first!
-      ch++;
-      uart_putc(UART_ID, ch);
-    }
-    chars_rxed++;
-  }
-}
+// // RX interrupt handler
+// void on_uart_rx() {
+//   while (uart_is_readable(UART_ID)) {
+//     uint8_t ch = uart_getc(UART_ID);
+//     // Can we send it back?
+//     if (uart_is_writable(UART_ID)) {
+//       // Change it slightly first!
+//       ch++;
+//       uart_putc(UART_ID, ch);
+//     }
+//     chars_rxed++;
+//   }
+// }
 
 } // namespace
 
@@ -77,20 +77,24 @@ extern "C" void pw_sys_io_pico_Init() {
   // Set up a RX interrupt
   // We need to set up the handler first
   // Select correct interrupt for the UART we are using
-  int UART_IRQ = UART_ID == uart0 ? UART0_IRQ : UART1_IRQ;
+
+  // int UART_IRQ = UART_ID == uart0 ? UART0_IRQ : UART1_IRQ;
 
   // And set up and enable the interrupt handlers
-  irq_set_exclusive_handler(UART_IRQ, on_uart_rx);
-  irq_set_enabled(UART_IRQ, true);
+
+  // irq_set_exclusive_handler(UART_IRQ, on_uart_rx);
+  // irq_set_enabled(UART_IRQ, true);
 
   // Now enable the UART to send interrupts - RX only
-  uart_set_irq_enables(UART_ID, true, false);
+
+  // uart_set_irq_enables(UART_ID, true, false);
 
   // OK, all set up.
   // Lets send a basic string out, and then run a loop and wait for RX
   // interrupts The handler will count them, but also reflect the incoming data
-  // back with a slight change! uart_puts(UART_ID, "\nHello, uart
-  // interrupts\n");
+  // back with a slight change!
+
+  // uart_puts(UART_ID, "\nHello, uart interrupts\n");
 }
 
 namespace pw::sys_io {
@@ -104,17 +108,15 @@ Status ReadByte(std::byte *dest) {
 }
 
 Status TryReadByte(std::byte *dest) {
-  if (!Serial.available()) {
+  if (!uart_is_readable(UART_ID)) {
     return Status::Unavailable();
   }
-  *dest = static_cast<std::byte>(Serial.read());
+  *dest = static_cast<std::byte>(uart_getc(UART_ID));
   return OkStatus();
 }
 
-// Send a byte over the default Arduino Serial port.
 Status WriteByte(std::byte b) {
-  // Serial.write() will block until data can be written.
-  Serial.write((uint8_t)b);
+  uart_putc(UART_ID, (uint8_t)b);
   return OkStatus();
 }
 
