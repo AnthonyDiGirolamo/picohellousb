@@ -33,39 +33,23 @@ group("default") {
 # Group all targets that run on host only, e.g. tests, utils.
 group("host") {
   deps = [
+    # No host tests yet
     # ":host_tests(//targets/host:host_debug_tests)"
+    # elf2uf2 Host tool
     "//third_party/elf2uf2:elf2uf2(//targets/host:host_debug)",
   ]
 }
 
 group("pico") {
   deps = [
-    # "pico_build:bs2_default(//targets/pico:pico_debug)",
-    "pico_build(//targets/pico:pico_debug)",
+    # Typical pico executables use the pico_debug toolchain.
     "//applications/blinky:blinky(//targets/pico:pico_debug)",
+    "//pico_build(//targets/pico:pico_debug)",
+
+    # bs2_default uses the pico_base_debug toolchain.
+    "//pico_build/bs2_default(//targets/pico_base:pico_base_debug)",
   ]
 }
-
-# Arduino specific targets.
-# group("arduino") {
-#   if (pw_arduino_build_CORE_PATH != "") {
-#     deps = [ ":arduino_tests(//targets/arduino:arduino_debug_tests)" ]
-#
-#     if (pw_arduino_build_CORE_NAME == "teensy") {
-#       deps += []
-#     }
-#   }
-# }
-
-# # stm32f429i_disc1 specific targets.
-# group("stm32f429i_disc1") {
-#   _default_toolchain = "//targets/stm32f429i_disc1:stm32f429i_disc1_debug"
-#   _testing_toolchain = "${_default_toolchain}_tests"
-#   deps = [
-#     # ":app(${_default_toolchain})",
-#     ":tests(${_testing_toolchain})",
-#   ]
-# }
 
 # Python packages are built using the host toolchain.
 pw_python_group("python") {
@@ -77,61 +61,3 @@ pw_python_group("python") {
     "//third_party/pigweed/pw_env_setup:target_support_packages",
   ]
 }
-
-group("applications") {
-  deps = []
-
-  # # Teensy 3.0/4.0 applications steps.
-  # if (pw_arduino_build_CORE_PATH != "") {
-  #   deps += [
-  #     ":applications_tests(//targets/arduino:arduino_debug_tests)",
-  #     "//applications/blinky:blinky(//targets/arduino:arduino_debug)",
-  #     "//applications/rpc:all(//targets/arduino:arduino_debug)",
-  #     "//applications/strings:all(//targets/arduino:arduino_debug)",
-  #     "//applications/tls_example:boringssl_teensy_ethernet(//targets/arduino:arduino_debug)",
-  #     "//applications/tls_example:mbedtls_teensy_ethernet(//targets/arduino:arduino_debug)",
-  #     "//applications/tls_example:picotls_teensy_ethernet(//targets/arduino:arduino_debug)",
-  #   ]
-  # }
-
-  # # STMicroelectronics STM32F429I-DISC1 applications steps.
-  # deps += [
-  #   ":applications_tests(//targets/stm32f429i_disc1:stm32f429i_disc1_debug_tests)",
-  #   "//applications/blinky:blinky(//targets/stm32f429i_disc1:stm32f429i_disc1_debug)",
-  #   "//applications/rpc:all(//targets/stm32f429i_disc1:stm32f429i_disc1_debug)",
-  #   "//applications/strings:all(//targets/stm32f429i_disc1:stm32f429i_disc1_debug)",
-  # ]
-
-  # Host applications steps.
-  deps += [
-    # ":applications_tests(//targets/host:host_debug_tests)",
-    # "//applications/strings:all(//targets/host:host_debug)",
-  ]
-}
-
-# # Group the different modules tests together.
-# pw_test_group("tests") {
-#   group_deps = [ "//applications/strings:tests" ]
-#   if (pw_arduino_build_CORE_NAME == "teensy") {
-#     group_deps += []
-#   }
-# }
-
-# # Test groups for each platform that will build and optionally run the tests.
-# foreach(test_group,
-#         [
-#           "arduino",
-#           "host",
-#           "applications",
-#         ]) {
-#   group("${test_group}_tests") {
-#     deps = []
-#     if (pw_unit_test_AUTOMATIC_RUNNER == "") {
-#       # Without a test runner defined, build the tests but don't run them.
-#       deps += [ ":tests" ]
-#     } else {
-#       # With a test runner, build and run tests.
-#       deps += [ ":tests_run" ]
-#     }
-#   }
-# }

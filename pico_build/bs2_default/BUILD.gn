@@ -1,0 +1,58 @@
+import("//build_overrides/pigweed.gni")
+
+import("$dir_pw_build/target_types.gni")
+
+_pico_sdk_dir = rebase_path(dir_third_party_pico_sdk)
+
+pw_executable("bs2_default") {
+  defines = [
+    "PICO_H_LOCATION=\"${_pico_sdk_dir}/src/boards/include/boards/pico.h\"",
+    "RENAME_EXCEPTIONS_H_LOCATION=\"$_pico_sdk_dir/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h\"",
+    "PICO_BOARD=\"pico\"",
+    "PICO_BUILD=1",
+    "PICO_NO_HARDWARE=0",
+    "PICO_ON_DEVICE=1",
+  ]
+  asmflags = [
+    "-mcpu=cortex-m0plus",
+    "-mthumb",
+    "-O3",
+    "-DNDEBUG",
+  ]
+  include_dirs = [
+    "${_pico_sdk_dir}/src/boards/include",
+    "${_pico_sdk_dir}/src/common/pico_base/include",
+    "${_pico_sdk_dir}/src/rp2040/hardware_regs/include",
+    "${_pico_sdk_dir}/src/rp2_common/boot_stage2/asminclude",
+    "${_pico_sdk_dir}/src/rp2_common/boot_stage2/include",
+    "${_pico_sdk_dir}/src/rp2_common/hardware_base/include",
+    "${_pico_sdk_dir}/src/rp2_common/pico_platform/include",
+    "$dir_pico_build/public_overrides",
+  ]
+  sources =
+      [ "${_pico_sdk_dir}/src/rp2_common/boot_stage2/compile_time_choice.S" ]
+  ldflags = [
+    "-Wl,--build-id=none",
+    "-nostartfiles",
+    "-Wl,--script=${_pico_sdk_dir}/src/rp2_common/boot_stage2/boot_stage2.ld",
+    "-Wl,-Map=bs2_default.elf.map",
+  ]
+}
+
+# Followup steps for bs2_default.elf
+
+# 1. arm-none-eabi-objdump -h bs2_default.elf >bs2_default.dis
+# 2. arm-none-eabi-objdump -d bs2_default.elf >>bs2_default.dis
+# 3. Generating bs2_default.bin
+#   cd pico-sdk/src/rp2_common/boot_stage2 &&
+#   ../../../../../.environment/cipd/pigweed/bin/arm-none-eabi-objcopy
+#   -Obinary
+#   /home/tonymd/pico/picohellousbserial/outcmake/pico-sdk/src/rp2_common/boot_stage2/bs2_default.elf
+#   /home/tonymd/pico/picohellousbserial/outcmake/pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
+# 4. Generating bs2_default_padded_checksummed.S
+#   cd pico-sdk/src/rp2_common/boot_stage2 &&
+#   /usr/bin/python3.8
+#   ./picohellousbserial/third_party/pico-sdk/src/rp2_common/boot_stage2/pad_checksum
+#   -s 0xffffffff
+#   ./picohellousbserial/outcmake/pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
+#   ./picohellousbserial/outcmake/pico-sdk/src/rp2_common/boot_stage2/bs2_default_padded_checksummed.S
